@@ -1,9 +1,11 @@
+import axios from 'axios'
 import { storageService } from './async-storage.service.js'
 import { httpService } from './http.service.js'
 import { utilService } from './util.service.js'
 
-const STORAGE_KEY = 'boardDB'
-const BASE_URL = 'board'
+const STORAGE_KEY = 'weatherDB'
+const BASE_URL = 'weather'
+const VITE_WEATHER_API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
 
 export const citiesService = {
     query,
@@ -11,18 +13,19 @@ export const citiesService = {
     update,
     save,
     remove,
-    getCityByName
+    getCityByName,
+    getAutoComplete,
+    getCurrConditions,
+    get5DaysForecast
 }
 
-// General Update function
 async function update(city) {
     return await storageService.put(STORAGE_KEY, city)
     // let updatedBoard = await httpService.put(`${BASE_URL}/${boardId}`, board)
 }
-// Board functions
 async function query() {
-    return httpService.get(BASE_URL, null)
-    // return await storageService.query(STORAGE_KEY)
+    // return httpService.get(BASE_URL, null)
+    return await storageService.query(STORAGE_KEY)
 }
 
 async function getCityByName(name) {
