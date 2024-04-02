@@ -3,6 +3,7 @@ import { citiesService } from '../services/cities.service.local';
 import { utilService } from '../services/util.service';
 import { Autocomplete, TextField } from '@mui/material';
 import { showErrorMsg } from '../services/event-bus.service';
+import { CityDetails } from '../cmps/CityDetails';
 
 //Add a p above the autocomplete or a tooltip to it with MUI that says you obly have to type in english and not numbers
 //Add debounce to handleChange
@@ -11,6 +12,7 @@ import { showErrorMsg } from '../services/event-bus.service';
 //show data 
 //get weather images
 //add toasts for success or error
+//check getWeatherImage function make it better and change images
 
 export function WeatherDetails() {
     const [searchBy, setSearchBy] = useState('')
@@ -118,6 +120,13 @@ export function WeatherDetails() {
                 options={cityOptions}
                 sx={{ width: 300 }}
                 renderInput={(params) => <TextField {...params} label="City" />}
+            />
+
+            <CityDetails
+                fiveDaysForecaset={fiveDaysForecaset}
+                selectedCity={selectedCity}
+                setSelectedCity={setSelectedCity}
+                currConditions={currConditions}
             />
         </section>
     )

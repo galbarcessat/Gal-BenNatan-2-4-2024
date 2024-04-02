@@ -16,7 +16,8 @@ export const citiesService = {
     getCityByName,
     getAutoComplete,
     getCurrConditions,
-    get5DaysForecast
+    get5DaysForecast,
+    getWeatherImage
 }
 
 async function update(city) {
@@ -50,7 +51,22 @@ async function remove(cityId) {
     return await storageService.remove(STORAGE_KEY, cityId)
 }
 
+function getWeatherImage(weatherText) {
+    const lowerCaseTxt = weatherText.toLowerCase()
+    if (lowerCaseTxt.includes('sun') && !lowerCaseTxt.includes('cloud')) {
+        return "https://freepngdownload.com/image/thumb/sun-png-free-download-10.png"
+    } else if (lowerCaseTxt.includes('cloud') && !lowerCaseTxt.includes('sun') || lowerCaseTxt.includes('rain')) {
+        return 'https://www.transparentpng.com/thumb/weather-report/cloud-rain-water-lightning-nature-images-19.png'
+    }
+    else if (lowerCaseTxt.includes('cloud') && lowerCaseTxt.includes('sun')) {
+        return 'https://freepngimg.com/thumb/categories/2275.png'
+    }
+    else {
+        return 'https://freepngimg.com/thumb/categories/2275.png'
+    }
+}
 
+//API Calls functions
 async function getAutoComplete(text) {
     try {
         const res = await axios.get(`http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${VITE_WEATHER_API_KEY}&q=${text}`)
