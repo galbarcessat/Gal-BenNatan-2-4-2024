@@ -1,13 +1,11 @@
 import { storageService } from './async-storage.service.js'
 import { httpService } from './http.service.js'
-import { SOCKET_EVENT_UPDATE_BOARD, socketService } from './socket.service.js'
-import { userService } from './user.service.js'
 import { utilService } from './util.service.js'
 
 const STORAGE_KEY = 'boardDB'
 const BASE_URL = 'board'
 
-export const boardService = {
+export const citiesService = {
     query,
     getCityById,
     update,
@@ -47,4 +45,35 @@ async function save(cities) {
 async function remove(cityId) {
     // return httpService.delete(`${BASE_URL}/${boardId}`, boardId)
     return await storageService.remove(STORAGE_KEY, cityId)
+}
+
+
+async function getAutoComplete(text) {
+    try {
+        const res = await axios.get(`http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${VITE_WEATHER_API_KEY}&q=${text}`)
+        return res.data
+    } catch (error) {
+        console.log('error:', error)
+        throw error
+    }
+}
+
+async function getCurrConditions(locationKey) {
+    try {
+        const res = await axios.get(`http://dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${VITE_WEATHER_API_KEY}`)
+        return res.data
+    } catch (error) {
+        console.log('error:', error)
+        throw error
+    }
+}
+
+async function get5DaysForecast(locationKey) {
+    try {
+        const res = await axios.get(` http://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}?apikey=${VITE_WEATHER_API_KEY}&metric=true`)
+        return res.data
+    } catch (error) {
+        console.log('error:', error)
+        throw error
+    }
 }
