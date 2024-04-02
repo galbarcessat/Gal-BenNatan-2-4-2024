@@ -1,0 +1,36 @@
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+    margin-block-end: 2rem;
+    padding-inline: 1rem;
+    background: linear-gradient(rgba(255, 255, 255, 0.677), rgba(255, 255, 255, 0.323));
+
+    img {
+        width: 150px;
+        cursor: pointer;
+    }
+
+    .nav-links-container {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+
+        span {
+            font-size: 1.3rem;
+            cursor: pointer;
+            color: $abra-text-color;
+            padding: .5rem;
+            border-radius: .5rem;
+
+            &.active {
+                background-color: rgba(255, 255, 255, 0.466);
+            }
+
+            &:hover {
+                text-decoration: underline solid $abra-color;
+            }
+        }
+    }
+}
