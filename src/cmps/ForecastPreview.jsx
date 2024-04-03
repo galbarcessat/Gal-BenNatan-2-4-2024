@@ -20,10 +20,14 @@ export function ForecastPreview({ day }) {
 
     return (
         <div className="forecast-preview">
-            <span>{utilService.getDayOfWeek(day?.Date)}</span>
-            <img src={citiesService.getWeatherImage(day.Day.IconPhrase)} alt="" />
-            {/* <span>{getDegrees()}</span> */}
-            <span>{day && Math.trunc(day.Temperature.Minimum.Value) + '°C' + ' - ' + Math.trunc(day.Temperature.Maximum.Value) + '°C'}</span>
+            {day && <>
+                <span>{utilService.getDayOfWeek(day.Date)}</span>
+                <img src={citiesService.getWeatherImage(day.Day.IconPhrase)} alt="" />
+                {/* <span>{getDegrees()}</span> */}
+                <span>{day && Math.trunc(day.Temperature.Minimum.Value) + '°C' + ' - ' + Math.trunc(day.Temperature.Maximum.Value) + '°C'}</span>
+                <span className="daily-phrase">{day.Day.IconPhrase}</span>
+            </>
+            }
         </div>
     )
 }

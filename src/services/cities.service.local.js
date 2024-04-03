@@ -1,7 +1,8 @@
 import axios from 'axios'
 import { storageService } from './async-storage.service.js'
-import { httpService } from './http.service.js'
-import { utilService } from './util.service.js'
+import Sun from '../assets/imgs/Sun.png'
+import CloudsAndSun from '../assets/imgs/CloudsAndSun.png'
+import Rain from '../assets/imgs/Rain.png'
 
 const STORAGE_KEY = 'weatherDB'
 const BASE_URL = 'weather'
@@ -54,15 +55,15 @@ async function remove(cityId) {
 function getWeatherImage(weatherText) {
     const lowerCaseTxt = weatherText.toLowerCase()
     if (lowerCaseTxt.includes('sun') && !lowerCaseTxt.includes('cloud')) {
-        return "https://freepngdownload.com/image/thumb/sun-png-free-download-10.png"
-    } else if (lowerCaseTxt.includes('cloud') && !lowerCaseTxt.includes('sun') || lowerCaseTxt.includes('rain')) {
-        return 'https://www.transparentpng.com/thumb/weather-report/cloud-rain-water-lightning-nature-images-19.png'
+        return Sun
+    } else if (lowerCaseTxt.includes('shower') || lowerCaseTxt.includes('rain')) {
+        return Rain
     }
     else if (lowerCaseTxt.includes('cloud') && lowerCaseTxt.includes('sun')) {
-        return 'https://freepngimg.com/thumb/categories/2275.png'
+        return CloudsAndSun
     }
     else {
-        return 'https://freepngimg.com/thumb/categories/2275.png'
+        return CloudsAndSun
     }
 }
 

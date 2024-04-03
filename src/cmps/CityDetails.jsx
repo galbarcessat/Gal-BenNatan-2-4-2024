@@ -46,7 +46,7 @@ export function CityDetails({ fiveDaysForecaset, selectedCity, setSelectedCity, 
 
             <div>
                 <h1>{currConditions[0].WeatherText}</h1>
-                <h2>{fiveDaysForecaset.Headline.Text}</h2>
+                <h2>{fiveDaysForecaset?.Headline.Text}</h2>
             </div>
 
             <ForecastList forecast={fiveDaysForecaset} />
