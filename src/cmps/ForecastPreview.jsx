@@ -21,7 +21,8 @@ export function ForecastPreview({ day, isCelsius }) {
         <div className="forecast-preview">
             <span>{utilService.getDayOfWeek(day?.Date)}</span>
             <img src={citiesService.getWeatherImage(day.Day.IconPhrase)} alt="" />
-            <span>{getDegrees()}</span>
+            {/* <span>{getDegrees()}</span> */}
+            <span>{day?.Temperature.Maximum.Value + 'C'}</span>
         </div>
     )
 }

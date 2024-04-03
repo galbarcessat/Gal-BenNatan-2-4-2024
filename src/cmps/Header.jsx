@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import AbraLogo from '../assets/imgs/AbraLogo.png'
+import { Switch } from "@mui/material"
 
 export function Header() {
     const [currPage, setCurrPage] = useState('home')
@@ -26,8 +27,21 @@ export function Header() {
                 src={AbraLogo}
                 alt="Abra" />
             <div className="nav-links-container">
-                <span className={checkIsActive('home') ? 'active' : ''} onClick={() => changePage('home')}>Home</span>
-                <span className={checkIsActive('favorite') ? 'active' : ''} onClick={() => changePage('favorite')}>Favorites</span>
+                <div className={checkIsActive('home') ? 'active' : ''} onClick={() => changePage('home')}>Home</div>
+                <div className={checkIsActive('favorite') ? 'active' : ''} onClick={() => changePage('favorite')}>Favorites</div>
+                {/* <span
+                    onClick={() => {
+                        setIsCelsius(prevIsC => !prevIsC)
+                    }}
+                    className="btn-toggle-deg-type">
+                    {isCelsius ? 'C' : 'F'}
+                </span> */}
+                <Switch
+                    // checked={checked}
+                    // onChange={handleChange}
+                    inputProps={{ 'aria-label': 'controlled' }}
+                />
+
             </div>
         </header>
     )

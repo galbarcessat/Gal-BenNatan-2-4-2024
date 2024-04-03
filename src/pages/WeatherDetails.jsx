@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { citiesService } from '../services/cities.service.local';
 import { utilService } from '../services/util.service';
-import { Autocomplete, TextField } from '@mui/material';
+import { Autocomplete, Switch, TextField } from '@mui/material';
 import { showErrorMsg } from '../services/event-bus.service';
 import { CityDetails } from '../cmps/CityDetails';
 
@@ -12,6 +12,7 @@ import { CityDetails } from '../cmps/CityDetails';
 //show data 
 //get weather images
 //add toasts for success or error
+//Dark/Light mode and C/F should be in the header and work with Redux.
 //check getWeatherImage function make it better and change images
 
 export function WeatherDetails() {
@@ -115,7 +116,6 @@ export function WeatherDetails() {
                 onChange={onSelectCity}
                 getOptionSelected={(option, value) => option.LocalizedName === value.LocalizedName}
                 getOptionLabel={(option) => option.LocalizedName}
-                // isOptionEqualToValue={(option, value) => option.Key === value.Key}
                 id="combo-box-demo"
                 options={cityOptions}
                 sx={{ width: 300 }}

@@ -1,9 +1,9 @@
 import { combineReducers, compose, legacy_createStore as createStore } from "redux"
 
-import { boardReducer } from "./reducers/board.reducer"
+import { weatherReducer } from "./reducers/weather.reducer"
 
 const rootReducer = combineReducers({
-    boardModule: boardReducer
+    weatherModule: weatherReducer
 })
 
 

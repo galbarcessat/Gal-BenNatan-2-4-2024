@@ -5,7 +5,6 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 
 //FIX LAYOUT AND OVERALL DESIGN WITH SASS
 export function CityDetails({ fiveDaysForecaset, selectedCity, setSelectedCity, currConditions }) {
-    const [isCelsius, setIsCelsius] = useState(true)
     const [isFavorite, setIsFavorite] = useState(false)
 
     async function onToggleFavorite() {
@@ -15,7 +14,7 @@ export function CityDetails({ fiveDaysForecaset, selectedCity, setSelectedCity, 
 
     //put a loading gif
     if (!currConditions) return <div>Loading...</div>
-    const celsiusOrFahrenheit = isCelsius ? currConditions[0]?.Temperature.Metric.Value + '°C' : currConditions[0]?.Temperature.Imperial.Value + '°F'
+    // const celsiusOrFahrenheit = isCelsius ? currConditions[0]?.Temperature.Metric.Value + '°C' : currConditions[0]?.Temperature.Imperial.Value + '°F'
     return (
         <div className="city-details-container">
 
@@ -24,10 +23,11 @@ export function CityDetails({ fiveDaysForecaset, selectedCity, setSelectedCity, 
                     {fiveDaysForecaset && <img src={citiesService.getWeatherImage(fiveDaysForecaset.DailyForecasts[0].Day.IconPhrase)} alt="" />}
                     <div>
                         <span>{selectedCity?.LocalizedName}</span>
-                        {currConditions && <span>{celsiusOrFahrenheit}</span>}
+                        {/* {currConditions && <span>{celsiusOrFahrenheit}</span>} */}
+                        {currConditions && <span>{currConditions[0]?.Temperature.Metric.Value + '°C'}</span>}
                     </div>
                 </div>
-                <div className="btns-container">
+                <div className="toggle-favorite-container">
                     <div className='heart-container'>
                         <FavoriteIcon
                             onClick={() => onToggleFavorite()}
@@ -41,18 +41,11 @@ export function CityDetails({ fiveDaysForecaset, selectedCity, setSelectedCity, 
                         onClick={() => onToggleFavorite()}>
                         Add to favorites
                     </button>
-                    <span
-                        onClick={() => {
-                            setIsCelsius(prevIsC => !prevIsC)
-                        }}
-                        className="btn-toggle-deg-type">
-                        {isCelsius ? 'C' : 'F'}
-                    </span>
                 </div>
             </div>
 
             {currConditions && <h1>{currConditions[0]?.WeatherText}</h1>}
-            <ForecastList forecast={fiveDaysForecaset} isCelsius={isCelsius} />
+            <ForecastList forecast={fiveDaysForecaset}  />
         </div>
     )
 }
