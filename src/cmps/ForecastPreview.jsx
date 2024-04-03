@@ -2,7 +2,8 @@
 import { utilService } from "../services/util.service"
 import { citiesService } from "../services/cities.service.local"
 
-export function ForecastPreview({ day, isCelsius }) {
+export function ForecastPreview({ day }) {
+    //get isCelsius from store
 
     function getDegrees() {
         const degInC = day?.Temperature.Maximum.Value
@@ -22,7 +23,7 @@ export function ForecastPreview({ day, isCelsius }) {
             <span>{utilService.getDayOfWeek(day?.Date)}</span>
             <img src={citiesService.getWeatherImage(day.Day.IconPhrase)} alt="" />
             {/* <span>{getDegrees()}</span> */}
-            <span>{day?.Temperature.Maximum.Value + 'C'}</span>
+            <span>{day && Math.trunc(day.Temperature.Minimum.Value) + '°C' + ' - ' + Math.trunc(day.Temperature.Maximum.Value) + '°C'}</span>
         </div>
     )
 }

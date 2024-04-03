@@ -28,14 +28,14 @@ export function CityDetails({ fiveDaysForecaset, selectedCity, setSelectedCity, 
                     </div>
                 </div>
                 <div className="toggle-favorite-container">
-                    <div className='heart-container'>
+                    {/* <div className='heart-container'> */}
                         <FavoriteIcon
                             onClick={() => onToggleFavorite()}
                             fontSize="large"
                             style={{ color: selectedCity?.isFavorite ? 'red' : 'white' }}
-                            className={selectedCity?.isFavorite ? 'favorite' : ''}
+                            className={'heart-icon ' + selectedCity?.isFavorite ? 'favorite' : ''}
                         />
-                    </div>
+                    {/* </div> */}
                     <button
                         className='btn-add-to-fav'
                         onClick={() => onToggleFavorite()}>
@@ -44,8 +44,12 @@ export function CityDetails({ fiveDaysForecaset, selectedCity, setSelectedCity, 
                 </div>
             </div>
 
-            {currConditions && <h1>{currConditions[0]?.WeatherText}</h1>}
-            <ForecastList forecast={fiveDaysForecaset}  />
+            <div>
+                <h1>{currConditions[0].WeatherText}</h1>
+                <h2>{fiveDaysForecaset.Headline.Text}</h2>
+            </div>
+
+            <ForecastList forecast={fiveDaysForecaset} />
         </div>
     )
 }

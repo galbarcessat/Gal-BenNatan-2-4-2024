@@ -8,16 +8,19 @@ import { CityDetails } from '../cmps/CityDetails';
 //Add a p above the autocomplete or a tooltip to it with MUI that says you obly have to type in english and not numbers
 //Add debounce to handleChange
 //try to fix all autocomplete bugs
-//Design the layout
 //show data 
 //get weather images
 //add toasts for success or error
 //Dark/Light mode and C/F should be in the header and work with Redux.
 //check getWeatherImage function make it better and change images
+//caching system isnt good it saves conditions and forecast which isnt up to date - ITS ONLY FOR DEV NOT FOR PRODUCTION
+//Caching system should only be for if its in favorites or not 
+//Tel aviv by default means it should automaticly search for tel aviv and get its updated data
 
 export function WeatherDetails() {
     const [searchBy, setSearchBy] = useState('')
     // const [selectedCity, setSelectedCity] = useState(null)
+    //this default to Tel Aviv isnt good it should search for tel aviv to get 
     const [selectedCity, setSelectedCity] = useState({
         Version: 1,
         Key: "215854",
