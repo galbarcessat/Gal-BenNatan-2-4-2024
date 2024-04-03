@@ -1,0 +1,14 @@
+.forecast-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    border: 1px solid white;
+    padding: 3rem;
+    font-size: 17px;
+    border-radius: .5rem;
+    background: linear-gradient(#3E2D8F, #8E78C8);
+    width: 160px;
+    height: 160px;
+}

@@ -5,7 +5,8 @@ export const utilService = {
     getRandomIntInclusive,
     loadFromStorage,
     saveToStorage,
-    debounce
+    debounce,
+    getDayOfWeek
 }
 
 function makeId(length = 6) {
@@ -40,4 +41,10 @@ function debounce(func, timeout = 300) {
         clearTimeout(timer)
         timer = setTimeout(() => { func.apply(this, args) }, timeout)
     }
+}
+
+function getDayOfWeek(dateString) {
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    const date = new Date(dateString)
+    return days[date.getDay()]
 }
