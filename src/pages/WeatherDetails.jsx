@@ -91,7 +91,7 @@ export function WeatherDetails() {
         } else {
             setSelectedCity(selectedOption)
         }
-        // setSearchBy(selectedOption?.LocalizedName)
+        setSearchBy(selectedOption?.LocalizedName)
     }
 
     function handleChange(ev) {
