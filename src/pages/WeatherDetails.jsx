@@ -1,18 +1,15 @@
 import { useEffect, useState } from 'react';
 import { citiesService } from '../services/cities.service.local';
 import { utilService } from '../services/util.service';
-import { Autocomplete, Switch, TextField } from '@mui/material';
+import { Autocomplete, TextField } from '@mui/material';
 import { showErrorMsg } from '../services/event-bus.service';
 import { CityDetails } from '../cmps/CityDetails';
 
-//Add a p above the autocomplete or a tooltip to it with MUI that says you obly have to type in english and not numbers
+//Add a p above the autocomplete or a tooltip to it with MUI that says you only have to type in english and not numbers
 //Add debounce to handleChange
 //try to fix all autocomplete bugs
-//show data 
-//get weather images
 //add toasts for success or error
 //Dark/Light mode and C/F should be in the header and work with Redux.
-//check getWeatherImage function make it better and change images
 //caching system isnt good it saves conditions and forecast which isnt up to date - ITS ONLY FOR DEV NOT FOR PRODUCTION
 //Caching system should only be for if its in favorites or not 
 //Tel aviv by default means it should automaticly search for tel aviv and get its updated data
@@ -35,10 +32,18 @@ export function WeatherDetails() {
             ID: "TA",
             LocalizedName: "Tel Aviv"
         }
-    })
+    }
+    )
     const [cityOptions, setCityOptions] = useState([])
     const [currConditions, setCurrConditions] = useState(null)
     const [fiveDaysForecaset, setFiveDaysForecaset] = useState(null)
+
+    // useEffect(() => {
+    //     //אם לא לחצתי על אחד מהאהובים אז אין איידי של אחד אהוב ולשים ישר תל אביב
+    //     if (!cityId) {
+    //         setSearchBy('Tel aviv')
+    //     }
+    // })
 
     useEffect(() => {
         getCityOptions()
@@ -105,7 +110,11 @@ export function WeatherDetails() {
             return
         }
         else if (/^[a-zA-Z\s]*$/.test(value) || value === '') {
+            console.log('English:', value)
             setSearchBy(value)
+        }
+        else {
+            console.log('Hebrew?:', value)
         }
     }
 

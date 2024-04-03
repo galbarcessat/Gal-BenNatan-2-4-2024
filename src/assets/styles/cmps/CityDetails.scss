@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 5rem;
+    gap: 4.5rem;
     border: 1px solid white;
     padding: 1.5rem;
     margin-block: 1.5rem;
@@ -14,6 +14,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        flex-wrap: wrap;
 
         .city-info-container {
             display: flex;

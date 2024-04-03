@@ -67,6 +67,13 @@ function getWeatherImage(weatherText) {
     }
 }
 
+async function toggleIsFavorite(cityName) {
+    let city = await getCityByName(cityName)
+    city.cityDetails.isFavorite = !city.cityDetails.isFavorite
+    return await update(city)
+}
+
+
 //API Calls functions
 async function getAutoComplete(text) {
     try {

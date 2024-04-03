@@ -1,16 +1,15 @@
-
 import { utilService } from "../services/util.service"
 import { citiesService } from "../services/cities.service.local"
 
-export function ForecastPreview({ day }) {
-    //get isCelsius from store
+export function ForecastPreview({ day, isCelsius }) {
 
     function getDegrees() {
-        const degInC = day?.Temperature.Maximum.Value
+        const minDegInC = day.Temperature.Minimum.Value
+        const maxDegInC = day.Temperature.Maximum.Value
         if (isCelsius) {
-            return degInC + '°C'
+            return Math.trunc(minDegInC) + '°C' + ' - ' + Math.trunc(maxDegInC) + '°C'
         } else {
-            return celsiusToFahrenheit(degInC) + '°F'
+            return Math.trunc(celsiusToFahrenheit(minDegInC)) + '°F' + ' - ' + Math.trunc(celsiusToFahrenheit(maxDegInC)) + '°F'
         }
     }
 
@@ -23,9 +22,9 @@ export function ForecastPreview({ day }) {
             {day && <>
                 <span>{utilService.getDayOfWeek(day.Date)}</span>
                 <img src={citiesService.getWeatherImage(day.Day.IconPhrase)} alt="" />
-                {/* <span>{getDegrees()}</span> */}
-                <span>{day && Math.trunc(day.Temperature.Minimum.Value) + '°C' + ' - ' + Math.trunc(day.Temperature.Maximum.Value) + '°C'}</span>
+                <span>{getDegrees()}</span>
                 <span className="daily-phrase">{day.Day.IconPhrase}</span>
+                <a href={day.Link} target="_blank" rel="noopener noreferrer">GET FULL INFO</a>
             </>
             }
         </div>
