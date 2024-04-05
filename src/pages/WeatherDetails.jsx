@@ -54,8 +54,7 @@ export function WeatherDetails() {
     }, [searchBy])
 
     useEffect(() => {
-        // getWeather()
-        getConditions()
+        getWeather()
     }, [selectedCity])
 
     async function getCityOptions() {
@@ -75,7 +74,7 @@ export function WeatherDetails() {
         if (!selectedCity) return
         // ONLY SAVE TO LOCAL STORAGE IF FAVORITE 
         // CHECK IF IS IN LOCAL STORAGE TO SHOW IF FAVORTIE OR NO 
-        const cityFromStorage = await citiesService.getCityByName(selectedCity.LocalizedName)
+        const cityFromStorage = await citiesService.getCityByKey(selectedCity.Key)
         const city = cityFromStorage ? cityFromStorage : selectedCity
         try {
             const conditions = await citiesService.getCurrConditions(city.Key)
@@ -95,7 +94,7 @@ export function WeatherDetails() {
 
     // async function getWeather() {
     //     if (!selectedCity) return
-    //     const cityFromStorage = await citiesService.getCityByName(selectedCity.LocalizedName)
+    //     const cityFromStorage = await citiesService.getCityByKey(selectedCity.Key)
     //     if (cityFromStorage) {
     //         console.log('Getting city from local storage')
     //         setCurrConditions(cityFromStorage.conditions)
@@ -121,7 +120,7 @@ export function WeatherDetails() {
     // }
 
     async function onSelectCity(ev, selectedOption) {
-        let cityFromStorage = await citiesService.getCityByName(selectedOption?.LocalizedName)
+        let cityFromStorage = await citiesService.getCityByKey(selectedOption?.Key)
         if (cityFromStorage) {
             setSelectedCity(cityFromStorage.cityDetails)
         } else {

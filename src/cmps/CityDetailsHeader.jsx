@@ -1,8 +1,9 @@
+import { useState } from 'react';
 import { citiesService } from '../services/cities.service.local'
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
 export function CityDetailsHeader({ fiveDaysForecaset, selectedCity, setSelectedCity, celsiusOrFahrenheit }) {
-    const [isFavorite, setIsFavorite] = useState(false)
+    // const [isFavorite, setIsFavorite] = useState(false)
 
     async function onToggleFavorite() {
         const savedCity = await citiesService.toggleIsFavorite(selectedCity)
@@ -20,18 +21,16 @@ export function CityDetailsHeader({ fiveDaysForecaset, selectedCity, setSelected
                 </div>
             </div>
             <div className="toggle-favorite-container">
-                {/* <div className='heart-container'> */}
-                <FavoriteIcon
-                    onClick={() => onToggleFavorite()}
-                    fontSize="large"
-                    style={{ color: selectedCity?.isFavorite ? 'red' : 'white' }}
-                    className={'heart-icon ' + selectedCity?.isFavorite ? 'favorite' : ''}
-                />
-                {/* </div> */}
+                <div className={'heart-icon-container ' + (selectedCity?.isFavorite ? 'favorite' : '')}>
+                    <FavoriteIcon
+                        fontSize="large"
+                        style={{ color: selectedCity?.isFavorite ? 'red' : 'white' }}
+                    />
+                </div>
                 <button
                     className='btn-add-to-fav'
                     onClick={() => onToggleFavorite()}>
-                    Add to favorites
+                    {selectedCity?.isFavorite ? 'Remove' : 'Add'} to favorites
                 </button>
             </div>
         </div>
