@@ -5,14 +5,18 @@ import { Autocomplete, TextField } from '@mui/material';
 import { showErrorMsg } from '../services/event-bus.service';
 import { CityDetails } from '../cmps/CityDetails';
 
-//Add a p above the autocomplete or a tooltip to it with MUI that says you only have to type in english and not numbers
-//Add debounce to handleChange
+// IMPORTANT
 //try to fix all autocomplete bugs
-//add toasts for success or error
-//Dark/Light mode and C/F should be in the header and work with Redux.
 //caching system isnt good it saves conditions and forecast which isnt up to date - ITS ONLY FOR DEV NOT FOR PRODUCTION
 //Caching system should only be for if its in favorites or not 
 //Tel aviv by default means it should automaticly search for tel aviv and get its updated data
+//Add debounce to handleChange
+//add toasts for success or error
+//Dark/Light mode and C/F should be in the header and work with Redux.
+
+// EXTRAS
+//Check the time if its day or night and by it take the data for CityDetails and for ForecastPreview
+//Add a p above the autocomplete or a tooltip to it with MUI that says you only have to type in english and not numbers
 
 export function WeatherDetails() {
     const [searchBy, setSearchBy] = useState('')
@@ -50,7 +54,8 @@ export function WeatherDetails() {
     }, [searchBy])
 
     useEffect(() => {
-        getWeather()
+        // getWeather()
+        getConditions()
     }, [selectedCity])
 
     async function getCityOptions() {
@@ -68,30 +73,52 @@ export function WeatherDetails() {
 
     async function getWeather() {
         if (!selectedCity) return
+        // ONLY SAVE TO LOCAL STORAGE IF FAVORITE 
+        // CHECK IF IS IN LOCAL STORAGE TO SHOW IF FAVORTIE OR NO 
         const cityFromStorage = await citiesService.getCityByName(selectedCity.LocalizedName)
-        if (cityFromStorage) {
-            console.log('Getting city from local storage')
-            setCurrConditions(cityFromStorage.conditions)
-            setFiveDaysForecaset(cityFromStorage.forecast)
-            return
-        } else {
-            try {
-                const conditions = await citiesService.getCurrConditions(selectedCity.Key)
-                setCurrConditions(conditions)
+        const city = cityFromStorage ? cityFromStorage : selectedCity
+        try {
+            const conditions = await citiesService.getCurrConditions(city.Key)
+            setCurrConditions(conditions)
 
-                const forecast = await citiesService.get5DaysForecast(selectedCity.Key)
-                setFiveDaysForecaset(forecast)
-
-                const cityToSave = { cityDetails: selectedCity, conditions, forecast }
-                console.log('cityToSave:', cityToSave)
-                citiesService.save(cityToSave)
-            } catch (error) {
-                console.log('error:', error)
-                // showErrorMsg('Could not fetch data for conditions and forecast ')
-            }
-
+            const forecast = await citiesService.get5DaysForecast(city.Key)
+            setFiveDaysForecaset(forecast)
+            //SHOW SUCCESS MSG
+        } catch (error) {
+            console.log('error:', error)
+            //SHOW ERROR MSG
         }
+
+
     }
+
+
+    // async function getWeather() {
+    //     if (!selectedCity) return
+    //     const cityFromStorage = await citiesService.getCityByName(selectedCity.LocalizedName)
+    //     if (cityFromStorage) {
+    //         console.log('Getting city from local storage')
+    //         setCurrConditions(cityFromStorage.conditions)
+    //         setFiveDaysForecaset(cityFromStorage.forecast)
+    //         return
+    //     } else {
+    //         try {
+    //             const conditions = await citiesService.getCurrConditions(selectedCity.Key)
+    //             setCurrConditions(conditions)
+
+    //             const forecast = await citiesService.get5DaysForecast(selectedCity.Key)
+    //             setFiveDaysForecaset(forecast)
+
+    //             const cityToSave = { cityDetails: selectedCity, conditions, forecast }
+    //             console.log('cityToSave:', cityToSave)
+    //             citiesService.save(cityToSave)
+    //         } catch (error) {
+    //             console.log('error:', error)
+    //             // showErrorMsg('Could not fetch data for conditions and forecast ')
+    //         }
+
+    //     }
+    // }
 
     async function onSelectCity(ev, selectedOption) {
         let cityFromStorage = await citiesService.getCityByName(selectedOption?.LocalizedName)

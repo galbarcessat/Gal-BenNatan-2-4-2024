@@ -18,7 +18,9 @@ export const citiesService = {
     getAutoComplete,
     getCurrConditions,
     get5DaysForecast,
-    getWeatherImage
+    getWeatherImage,
+    toggleIsFavorite,
+    getFavoriteCities
 }
 
 async function update(city) {
@@ -42,9 +44,9 @@ async function getCityById(id) {
     return city
 }
 
-async function save(cities) {
+async function save(city) {
     // return await httpService.post(BASE_URL, board)
-    return await storageService.post(STORAGE_KEY, cities)
+    return await storageService.post(STORAGE_KEY, city)
 }
 
 async function remove(cityId) {
@@ -67,10 +69,19 @@ function getWeatherImage(weatherText) {
     }
 }
 
-async function toggleIsFavorite(cityName) {
-    let city = await getCityByName(cityName)
-    city.cityDetails.isFavorite = !city.cityDetails.isFavorite
-    return await update(city)
+async function toggleIsFavorite(city) {
+    const cityFromStorage = await getCityByName(city.LocalizedName)
+    if (cityFromStorage) {
+        await remove(favoriteCity._id)
+        return
+    } else {
+        city.isFavorite = true
+        return await save(city)
+    }
+}
+
+async function getFavoriteCities() {
+    return await query()
 }
 
 
