@@ -22,9 +22,12 @@
 @import "cmps/FavoritePreview.scss";
 @import "cmps/Loader.scss";
 @import "cmps/UserMsg.scss";
+@import "cmps/MenuToggle.scss";
+
 
 // //PAGES
 @import "pages/WeatherDetails.scss";
 @import "pages/FavoritePage.scss";
 
 //MQ
+@import 'Mqs/HeaderMq.scss'

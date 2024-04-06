@@ -5,14 +5,18 @@ import { useSelector } from "react-redux"
 import { MaterialUISwitch } from "./MaterialUISwitch"
 import { showSuccessMsg } from "../services/event-bus.service"
 import AbraLogo from '../assets/imgs/AbraLogo.png'
+import { MenuToggle } from "./MenuToggle"
+import { useState } from "react"
 
 export function Header() {
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
     const currPage = useSelector(state => state.weatherModule.currPage)
     const isCelsius = useSelector(state => state.weatherModule.isCelsius)
     const navigate = useNavigate()
 
     function changePage(page) {
         setCurrPage(page)
+        setIsMenuOpen(false)
         if (page === 'home') {
             setFavoriteCity(null)
             navigate('/')
@@ -35,13 +39,17 @@ export function Header() {
         body.classList.toggle('light')
     }
 
+    function ToggleMenu(isChecked) {
+        isChecked ? setIsMenuOpen(true) : setIsMenuOpen(false)
+    }
+
     return (
         <header className="header-container">
             <img
                 onClick={() => changePage('home')}
                 src={AbraLogo}
                 alt="Abra" />
-            <div className="btns-container">
+            <div className={"btns-container " + (isMenuOpen ? 'open' : '')}>
                 <div className={'nav-link ' + (checkIsActive('home') ? 'active' : '')} onClick={() => changePage('home')}>Home</div>
                 <div className={'nav-link ' + (checkIsActive('favorite') ? 'active' : '')} onClick={() => changePage('favorite')}>Favorites</div>
 
@@ -71,6 +79,8 @@ export function Header() {
                 />
 
             </div>
+
+            <MenuToggle isMenuOpen={isMenuOpen} ToggleMenu={ToggleMenu}/>
         </header>
     )
 }
