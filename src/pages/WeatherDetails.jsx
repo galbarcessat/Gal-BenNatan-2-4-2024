@@ -4,6 +4,8 @@ import { utilService } from '../services/util.service';
 import { Autocomplete, TextField } from '@mui/material';
 import { showErrorMsg } from '../services/event-bus.service';
 import { CityDetails } from '../cmps/CityDetails';
+import { useSelector } from 'react-redux';
+import { setFavoriteCity } from '../store/actions/weather.action';
 
 // IMPORTANT
 //try to fix all autocomplete bugs
@@ -39,6 +41,8 @@ export function WeatherDetails() {
     const [cityOptions, setCityOptions] = useState([])
     const [currConditions, setCurrConditions] = useState(null)
     const [fiveDaysForecaset, setFiveDaysForecaset] = useState(null)
+    const savedFavoriteCity = useSelector(state => state.weatherModule.favoriteCity)
+
 
     // useEffect(() => {
     //     //אם לא לחצתי על אחד מהאהובים אז אין איידי של אחד אהוב ולשים ישר תל אביב
@@ -55,6 +59,12 @@ export function WeatherDetails() {
         getWeather()
     }, [selectedCity])
 
+    useEffect(() => {
+        if (savedFavoriteCity) {
+            setSelectedCity(savedFavoriteCity)
+        }
+    }, [savedFavoriteCity])
+
     async function getCityOptions() {
         try {
             if (searchBy) {
@@ -69,14 +79,25 @@ export function WeatherDetails() {
     }
 
     async function getWeather() {
-        if (!selectedCity) return
+        // later check if navigator as well
+        console.log('savedFavoriteCity:', savedFavoriteCity)
+        console.log('selectedCity:', selectedCity)
+
+        if (!selectedCity && !savedFavoriteCity) return
         // CHECK IN REDUX STORE IF THERES A SELECTED FAVORITE 
+        const city = savedFavoriteCity ? savedFavoriteCity : selectedCity
         try {
             // IF SELECTED FAVORTIE GET CONDITIONS FROM THERE ELSE MAKE THE API CALL
-            const conditions = await citiesService.getCurrConditions(selectedCity.Key)
-            setCurrConditions(conditions)
+            if (savedFavoriteCity) {
+                console.log('conditions from saved favorite:', savedFavoriteCity.conditions)
+                setCurrConditions(savedFavoriteCity.conditions)
+            } else {
+                console.log('conditions from selected:')
+                const conditions = await citiesService.getCurrConditions(selectedCity.Key)
+                setCurrConditions(conditions)
+            }
 
-            const forecast = await citiesService.get5DaysForecast(selectedCity.Key)
+            const forecast = await citiesService.get5DaysForecast(city.Key)
             setFiveDaysForecaset(forecast)
             //SHOW SUCCESS MSG
         } catch (error) {
@@ -90,6 +111,7 @@ export function WeatherDetails() {
     async function onSelectCity(ev, selectedOption) {
         const cityFromStorage = await citiesService.getCityByKey(selectedOption?.Key)
         const city = cityFromStorage ? cityFromStorage : selectedOption
+        setFavoriteCity(null)
         setSelectedCity(city)
         setSearchBy(city.LocalizedName)
     }

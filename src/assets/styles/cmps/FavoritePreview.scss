@@ -8,8 +8,8 @@
     border-radius: .5rem;
     padding: 1rem;
     font-size: 1.2rem;
-    width: 220px;
-    height: 250px;
+    width: 230px;
+    height: 270px;
     background: linear-gradient(#3E2D8F, #8E78C8);
     cursor: pointer;
 
@@ -20,5 +20,15 @@
     span {
         text-align: center;
         font-size: 1.1rem;
+
+        &:nth-child(2) {
+            font-size: .9rem;
+        }
+    }
+
+    &:hover {
+        box-shadow: 1px 1px 32px -7px rgba(0, 0, 0, 0.75);
+        -webkit-box-shadow: 1px 1px 32px -7px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: 1px 1px 32px -7px rgba(0, 0, 0, 0.75);
     }
 }
