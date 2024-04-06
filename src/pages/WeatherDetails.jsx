@@ -5,6 +5,7 @@ import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service';
 import { citiesService } from '../services/cities.service.local';
 import { CityDetails } from '../cmps/CityDetails';
 import { setFavoriteCity } from '../store/actions/weather.action';
+import { Loader } from '../cmps/Loader';
 
 // IMPORTANT
 //try to fix all autocomplete bugs
@@ -12,27 +13,11 @@ import { setFavoriteCity } from '../store/actions/weather.action';
 
 // EXTRAS
 //Time greeting - good morning...
-//Add a p above the autocomplete or a tooltip to it with MUI that says you only have to type in english and not numbers.
 // Google maps in favorties page
 
 export function WeatherDetails() {
     const [searchBy, setSearchBy] = useState('')
-    const [selectedCity, setSelectedCity] = useState({
-        Version: 1,
-        Key: "215854",
-        Type: "City",
-        Rank: 31,
-        LocalizedName: "Tel Aviv",
-        Country: {
-            ID: "IL",
-            LocalizedName: "Israel"
-        },
-        AdministrativeArea: {
-            ID: "TA",
-            LocalizedName: "Tel Aviv"
-        }
-    }
-    )
+    const [selectedCity, setSelectedCity] = useState(null)
     const [cityOptions, setCityOptions] = useState([])
     const [currConditions, setCurrConditions] = useState(null)
     const [fiveDaysForecaset, setFiveDaysForecaset] = useState(null)
@@ -65,20 +50,45 @@ export function WeatherDetails() {
         }
     }
 
+    async function setDefaultCity() {
+        if (!selectedCity && !savedFavoriteCity) {
+            if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition(async (position) => {
+                    const city = await citiesService.getCityByLatLong(position)
+                    setSelectedCity(city)
+                })
+            } else {
+                console.log('geolocation IS NOT available , default is Tel Aviv')
+                setSelectedCity({
+                    Version: 1,
+                    Key: "215854",
+                    Type: "City",
+                    Rank: 31,
+                    LocalizedName: "Tel Aviv",
+                    Country: {
+                        ID: "IL",
+                        LocalizedName: "Israel"
+                    },
+                    AdministrativeArea: {
+                        ID: "TA",
+                        LocalizedName: "Tel Aviv"
+                    }
+                })
+            }
+        }
+    }
+
     async function getWeather() {
-        // later check if navigator as well
+        await setDefaultCity()
         if (!selectedCity && !savedFavoriteCity) return
         const city = savedFavoriteCity ? savedFavoriteCity : selectedCity
         try {
             if (savedFavoriteCity) {
-                console.log('conditions from saved favorite:', savedFavoriteCity.conditions)
                 setCurrConditions(savedFavoriteCity.conditions)
             } else {
-                console.log('conditions from selected:')
                 const conditions = await citiesService.getCurrConditions(selectedCity.Key)
                 setCurrConditions(conditions)
             }
-
             const forecast = await citiesService.get5DaysForecast(city.Key)
             setFiveDaysForecaset(forecast)
             showSuccessMsg(`Weather for ${city.LocalizedName} has been fetched`)
@@ -86,8 +96,6 @@ export function WeatherDetails() {
             console.log('error:', error)
             showErrorMsg(`Error fetching weather for ${city.LocalizedName}`)
         }
-
-
     }
 
 
@@ -103,22 +111,18 @@ export function WeatherDetails() {
         setSearchBy(city.LocalizedName)
     }
 
-    //ADD DEBOUNCE AND ADD AN ERROR IF USER WRITES NOT IN ENGLISH
     function handleChange(ev) {
         if (!ev) return
         const value = ev.target.value
-        if (typeof value === 'number') {
-            return
-        }
-        else if (/^[a-zA-Z\s]*$/.test(value) || value === '') {
-            console.log('English:', value)
+        if (/^[a-zA-Z\s]*$/.test(value) || value === '') {
             setSearchBy(value)
         }
         else {
-            console.log('Hebrew?:', value)
+            showErrorMsg('Only english is allowed')
         }
     }
 
+    if (!selectedCity) return <Loader />
     return (
         <section className='weather-details-container'>
             <Autocomplete
