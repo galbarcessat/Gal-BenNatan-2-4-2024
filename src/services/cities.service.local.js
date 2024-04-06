@@ -20,7 +20,8 @@ export const citiesService = {
     get5DaysForecast,
     getWeatherImage,
     toggleIsFavorite,
-    getFavoriteCities
+    getFavoriteCities,
+    getCityByLatLong
 }
 
 async function update(city) {
@@ -111,6 +112,28 @@ async function get5DaysForecast(locationKey) {
     try {
         const res = await axios.get(` http://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}?apikey=${VITE_WEATHER_API_KEY}&metric=true`)
         return res.data
+    } catch (error) {
+        console.log('error:', error)
+        throw error
+    }
+}
+
+async function getCityByLatLong(position) {
+    const long = position.coords.longitude
+    const lat = position.coords.latitude
+    try {
+        const { data } = await axios.get(`https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${VITE_WEATHER_API_KEY}&q=${lat},${long}`)
+        // console.log('res:', res.data)
+        const city = {
+            Version: data.Version,
+            Key: data.Key,
+            Type: data.Type,
+            Rank: data.Rank,
+            LocalizedName: data.LocalizedName,
+            Country: data.Country,
+            AdministrativeArea: data.AdministrativeArea
+        }
+        return city
     } catch (error) {
         console.log('error:', error)
         throw error
