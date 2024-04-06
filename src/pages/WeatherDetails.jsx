@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { citiesService } from '../services/cities.service.local';
 import { utilService } from '../services/util.service';
 import { Autocomplete, TextField } from '@mui/material';
-import { showErrorMsg } from '../services/event-bus.service';
+import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service';
 import { CityDetails } from '../cmps/CityDetails';
 import { useSelector } from 'react-redux';
 import { setFavoriteCity } from '../store/actions/weather.action';
@@ -12,10 +12,10 @@ import { setFavoriteCity } from '../store/actions/weather.action';
 //Tel aviv by default means it should automaticly search for tel aviv and get its updated data
 //Add debounce to handleChange
 //add toasts for success or error
-//Dark/Light mode and C/F should be in the header and work with Redux.
+//Dark/Light mode.
 
 // EXTRAS
-//Check the time if its day or night and by it take the data for CityDetails and for ForecastPreview
+//Time greeting - good morning...
 //Add a p above the autocomplete or a tooltip to it with MUI that says you only have to type in english and not numbers
 
 export function WeatherDetails() {
@@ -74,7 +74,7 @@ export function WeatherDetails() {
             }
         } catch (error) {
             console.log('error:', error)
-            // showErrorMsg('Could not fetch data for cities')
+            showErrorMsg(`Error fetching data for city options`)
         }
     }
 
@@ -99,16 +99,17 @@ export function WeatherDetails() {
 
             const forecast = await citiesService.get5DaysForecast(city.Key)
             setFiveDaysForecaset(forecast)
-            //SHOW SUCCESS MSG
+            showSuccessMsg(`Weather for ${city.LocalizedName} has been fetched`)
         } catch (error) {
             console.log('error:', error)
-            //SHOW ERROR MSG
+            showErrorMsg(`Error fetching weather for ${city.LocalizedName}`)
         }
 
 
     }
 
     async function onSelectCity(ev, selectedOption) {
+        if (!selectedOption) return
         const cityFromStorage = await citiesService.getCityByKey(selectedOption?.Key)
         const city = cityFromStorage ? cityFromStorage : selectedOption
         setFavoriteCity(null)

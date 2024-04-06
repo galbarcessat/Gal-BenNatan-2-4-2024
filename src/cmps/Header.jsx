@@ -53,13 +53,6 @@ export function Header() {
                     <span>F</span>
                 </div>
 
-                {/* <span
-                    onClick={() => {
-                        () => toggleDegreeType()}}
-                    className="btn-toggle-deg-type">
-                    {isCelsius ? 'C' : 'F'}
-                </span> */}
-
                 <FormControlLabel
                     control={<MaterialUISwitch sx={{ m: 1 }} defaultChecked />}
                 />

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { citiesService } from "../services/cities.service.local"
 import { FavoriteList } from "../cmps/FavoriteList"
+import { showErrorMsg } from "../services/event-bus.service"
 
 export function FavoritePage() {
     const [favoriteCities, setFavoriteCities] = useState(null)
@@ -11,12 +12,16 @@ export function FavoritePage() {
 
     async function getFavCities() {
         const favCities = await citiesService.getFavoriteCities()
-        const promises = favCities.map(async (favCity) => {
-            const conditions = await citiesService.getCurrConditions(favCity.Key)
-            return { ...favCity, conditions }
-        })
-        const updatedFavCities = await Promise.all(promises)
-        setFavoriteCities(updatedFavCities)
+        try {
+            const promises = favCities.map(async (favCity) => {
+                const conditions = await citiesService.getCurrConditions(favCity.Key)
+                return { ...favCity, conditions }
+            })
+            const updatedFavCities = await Promise.all(promises)
+            setFavoriteCities(updatedFavCities)
+        } catch (error) {
+            showErrorMsg('Error fetching conditions for favorite cities')
+        }
     }
 
     return (
