@@ -30,6 +30,12 @@ export function Header() {
         showSuccessMsg(`Changed degree type to ${newDegType}`)
     }
 
+    function toggleDarkLightMode() {
+        const body = document.body;
+        body.classList.toggle('light');
+    }
+    
+
     return (
         <header className="header-container">
             <img
@@ -61,6 +67,8 @@ export function Header() {
 
                 <FormControlLabel
                     control={<MaterialUISwitch sx={{ m: 1 }} defaultChecked />}
+                    onChange={toggleDarkLightMode}
+
                 />
 
             </div>

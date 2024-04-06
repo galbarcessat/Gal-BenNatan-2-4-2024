@@ -12,9 +12,16 @@
 body {
   margin: 0;
   font-family: sans-serif;
-  background: linear-gradient(#1D2547, #503C9B, #704bab, #8F45AA);
+  // background: linear-gradient(#1D2547, #503C9B, #704bab, #8F45AA);
+  background: $linear-gradient-dark;
   min-height: 100vh;
   color: white;
+
+  // IN Light MODE
+  &.light {
+    background: $linear-gradient-light;
+  }
+
 }
 
 .transform-none {

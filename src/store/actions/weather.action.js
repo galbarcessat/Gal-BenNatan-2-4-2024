@@ -7,11 +7,6 @@ export function toggleDegreeType() {
     return !isCelsius
 }
 
-export function toggleDarkLightMode() {
-    const isDarkMode = store.getState().weatherModule.isDarkMode
-    store.dispatch({ type: SET_IS_DARKMODE, isDarkMode: !isDarkMode })
-}
-
 export function setFavoriteCity(favCity) {
     store.dispatch({ type: SET_FAVORITE_CITY, favoriteCity: favCity })
 }
