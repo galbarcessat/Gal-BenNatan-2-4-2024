@@ -3,8 +3,8 @@ import { FormControlLabel, Switch } from "@mui/material"
 import { setCurrPage, setFavoriteCity, toggleDegreeType } from "../store/actions/weather.action"
 import { useSelector } from "react-redux"
 import { MaterialUISwitch } from "./MaterialUISwitch"
-import AbraLogo from '../assets/imgs/AbraLogo.png'
 import { showSuccessMsg } from "../services/event-bus.service"
+import AbraLogo from '../assets/imgs/AbraLogo.png'
 
 export function Header() {
     const currPage = useSelector(state => state.weatherModule.currPage)
@@ -31,10 +31,9 @@ export function Header() {
     }
 
     function toggleDarkLightMode() {
-        const body = document.body;
-        body.classList.toggle('light');
+        const body = document.body
+        body.classList.toggle('light')
     }
-    
 
     return (
         <header className="header-container">
@@ -67,7 +66,7 @@ export function Header() {
 
                 <FormControlLabel
                     control={<MaterialUISwitch sx={{ m: 1 }} defaultChecked />}
-                    onChange={toggleDarkLightMode}
+                    onChange={() => toggleDarkLightMode()}
 
                 />
 

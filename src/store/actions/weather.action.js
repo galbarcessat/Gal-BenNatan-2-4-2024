@@ -1,5 +1,5 @@
 import { store } from '../store'
-import { SET_CURR_PAGE, SET_FAVORITE_CITY, SET_IS_CELSIUS, SET_IS_DARKMODE, SET_IS_LOADING } from '../reducers/weather.reducer'
+import { SET_CURR_PAGE, SET_FAVORITE_CITY, SET_IS_CELSIUS} from '../reducers/weather.reducer'
 
 export function toggleDegreeType() {
     const isCelsius = store.getState().weatherModule.isCelsius

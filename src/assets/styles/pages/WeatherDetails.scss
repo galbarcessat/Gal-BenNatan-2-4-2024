@@ -5,4 +5,22 @@
     justify-content: center;
     height: 100%;
     gap: 1rem;
+
+    .MuiAutocomplete-root {
+        background-color: rgba(0, 0, 0, 0.275);
+        border-radius: 4px;
+
+        .MuiSvgIcon-root {
+            color: white;
+        }
+
+        .MuiFormLabel-root,
+        .MuiInputBase-input {
+            color: white !important;
+        }
+
+        .MuiOutlinedInput-notchedOutline {
+            border-color: white !important;
+        }
+    }
 }
