@@ -1,7 +1,7 @@
 
 import { useNavigate } from "react-router-dom"
 import { citiesService } from "../services/cities.service.local"
-import { setFavoriteCity } from "../store/actions/weather.action"
+import { setCurrPage, setFavoriteCity } from "../store/actions/weather.action"
 
 // when a favorite is being clicked navigate to WeatherDetails and show the updated details there
 // maybe send its correct conditions and its city info together - use redux to make an object of its city info and conditions
@@ -14,6 +14,7 @@ export function FavoritePreview({ favCity, isCelsius }) {
 
     function onSelectFavCity() {
         setFavoriteCity(favCity)
+        setCurrPage('home')
         navigate('/')
     }
 
