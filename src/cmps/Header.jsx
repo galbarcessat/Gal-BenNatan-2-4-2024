@@ -8,8 +8,8 @@ import AbraLogo from '../assets/imgs/AbraLogo.png'
 
 export function Header() {
     const [currPage, setCurrPage] = useState('home')
-    const navigate = useNavigate()
     const isCelsius = useSelector(state => state.weatherModule.isCelsius)
+    const navigate = useNavigate()
 
     function changePage(page) {
         if (page === 'home') {

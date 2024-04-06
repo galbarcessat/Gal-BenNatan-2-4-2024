@@ -1,5 +1,5 @@
-import { ForecastList } from "./ForecastList"
 import { useSelector } from "react-redux";
+import { ForecastList } from "./ForecastList"
 import { CityDetailsHeader } from "./CityDetailsHeader";
 
 export function CityDetails({ fiveDaysForecaset, selectedCity, setSelectedCity, currConditions }) {

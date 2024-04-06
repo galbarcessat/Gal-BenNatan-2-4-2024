@@ -1,9 +1,7 @@
-import { useState } from 'react';
 import { citiesService } from '../services/cities.service.local'
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
 export function CityDetailsHeader({ fiveDaysForecaset, selectedCity, setSelectedCity, celsiusOrFahrenheit }) {
-    // const [isFavorite, setIsFavorite] = useState(false)
 
     async function onToggleFavorite() {
         const savedCity = await citiesService.toggleIsFavorite(selectedCity)

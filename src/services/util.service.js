@@ -6,7 +6,9 @@ export const utilService = {
     loadFromStorage,
     saveToStorage,
     debounce,
-    getDayOfWeek
+    getDayOfWeek,
+    celsiusToFahrenheit,
+    getDegrees
 }
 
 function makeId(length = 6) {
@@ -47,4 +49,19 @@ function getDayOfWeek(dateString) {
     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
     const date = new Date(dateString)
     return days[date.getDay()]
+}
+
+
+function celsiusToFahrenheit(degCelsius) {
+    return Math.trunc((degCelsius * 9 / 5) + 32)
+}
+
+function getDegrees(isCelsius, day) {
+    const minDegInC = day.Temperature.Minimum.Value
+    const maxDegInC = day.Temperature.Maximum.Value
+    if (isCelsius) {
+        return Math.trunc(minDegInC) + '°C' + ' - ' + Math.trunc(maxDegInC) + '°C'
+    } else {
+        return Math.trunc(celsiusToFahrenheit(minDegInC)) + '°F' + ' - ' + Math.trunc(celsiusToFahrenheit(maxDegInC)) + '°F'
+    }
 }

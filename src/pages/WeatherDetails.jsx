@@ -7,8 +7,6 @@ import { CityDetails } from '../cmps/CityDetails';
 
 // IMPORTANT
 //try to fix all autocomplete bugs
-//caching system isnt good it saves conditions and forecast which isnt up to date - ITS ONLY FOR DEV NOT FOR PRODUCTION
-//Caching system should only be for if its in favorites or not 
 //Tel aviv by default means it should automaticly search for tel aviv and get its updated data
 //Add debounce to handleChange
 //add toasts for success or error
@@ -72,15 +70,13 @@ export function WeatherDetails() {
 
     async function getWeather() {
         if (!selectedCity) return
-        // ONLY SAVE TO LOCAL STORAGE IF FAVORITE 
-        // CHECK IF IS IN LOCAL STORAGE TO SHOW IF FAVORTIE OR NO 
-        const cityFromStorage = await citiesService.getCityByKey(selectedCity.Key)
-        const city = cityFromStorage ? cityFromStorage : selectedCity
+        // CHECK IN REDUX STORE IF THERES A SELECTED FAVORITE 
         try {
-            const conditions = await citiesService.getCurrConditions(city.Key)
+            // IF SELECTED FAVORTIE GET CONDITIONS FROM THERE ELSE MAKE THE API CALL
+            const conditions = await citiesService.getCurrConditions(selectedCity.Key)
             setCurrConditions(conditions)
 
-            const forecast = await citiesService.get5DaysForecast(city.Key)
+            const forecast = await citiesService.get5DaysForecast(selectedCity.Key)
             setFiveDaysForecaset(forecast)
             //SHOW SUCCESS MSG
         } catch (error) {
@@ -91,44 +87,14 @@ export function WeatherDetails() {
 
     }
 
-
-    // async function getWeather() {
-    //     if (!selectedCity) return
-    //     const cityFromStorage = await citiesService.getCityByKey(selectedCity.Key)
-    //     if (cityFromStorage) {
-    //         console.log('Getting city from local storage')
-    //         setCurrConditions(cityFromStorage.conditions)
-    //         setFiveDaysForecaset(cityFromStorage.forecast)
-    //         return
-    //     } else {
-    //         try {
-    //             const conditions = await citiesService.getCurrConditions(selectedCity.Key)
-    //             setCurrConditions(conditions)
-
-    //             const forecast = await citiesService.get5DaysForecast(selectedCity.Key)
-    //             setFiveDaysForecaset(forecast)
-
-    //             const cityToSave = { cityDetails: selectedCity, conditions, forecast }
-    //             console.log('cityToSave:', cityToSave)
-    //             citiesService.save(cityToSave)
-    //         } catch (error) {
-    //             console.log('error:', error)
-    //             // showErrorMsg('Could not fetch data for conditions and forecast ')
-    //         }
-
-    //     }
-    // }
-
     async function onSelectCity(ev, selectedOption) {
-        let cityFromStorage = await citiesService.getCityByKey(selectedOption?.Key)
-        if (cityFromStorage) {
-            setSelectedCity(cityFromStorage.cityDetails)
-        } else {
-            setSelectedCity(selectedOption)
-        }
-        setSearchBy(selectedOption?.LocalizedName)
+        const cityFromStorage = await citiesService.getCityByKey(selectedOption?.Key)
+        const city = cityFromStorage ? cityFromStorage : selectedOption
+        setSelectedCity(city)
+        setSearchBy(city.LocalizedName)
     }
 
+    //ADD DEBOUNCE AND ADD AN ERROR IF USER WRITES NOT IN ENGLISH
     function handleChange(ev) {
         if (!ev) return
         const value = ev.target.value
