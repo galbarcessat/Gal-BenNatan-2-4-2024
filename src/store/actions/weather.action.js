@@ -4,6 +4,7 @@ import { SET_CURR_PAGE, SET_FAVORITE_CITY, SET_IS_CELSIUS, SET_IS_DARKMODE, SET_
 export function toggleDegreeType() {
     const isCelsius = store.getState().weatherModule.isCelsius
     store.dispatch({ type: SET_IS_CELSIUS, isCelsius: !isCelsius })
+    return !isCelsius
 }
 
 export function toggleDarkLightMode() {

@@ -4,6 +4,7 @@ import { setCurrPage, setFavoriteCity, toggleDegreeType } from "../store/actions
 import { useSelector } from "react-redux"
 import { MaterialUISwitch } from "./MaterialUISwitch"
 import AbraLogo from '../assets/imgs/AbraLogo.png'
+import { showSuccessMsg } from "../services/event-bus.service"
 
 export function Header() {
     const currPage = useSelector(state => state.weatherModule.currPage)
@@ -24,6 +25,11 @@ export function Header() {
         return page === currPage
     }
 
+    function changeDegreeType() {
+        const newDegType = toggleDegreeType() ? 'celcius' : 'farenheit'
+        showSuccessMsg(`Changed degree type to ${newDegType}`)
+    }
+
     return (
         <header className="header-container">
             <img
@@ -38,7 +44,7 @@ export function Header() {
                     <span>C</span>
                     <Switch
                         checked={!isCelsius}
-                        onChange={() => toggleDegreeType()}
+                        onChange={() => changeDegreeType()}
                         sx={{
                             '& .Mui-checked': {
                                 color: '#001E3C', // Color when the switch is checked
