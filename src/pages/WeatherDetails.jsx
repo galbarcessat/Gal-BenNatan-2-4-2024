@@ -25,7 +25,6 @@ export function WeatherDetails() {
     const [fiveDaysForecaset, setFiveDaysForecaset] = useState(null)
     const savedFavoriteCity = useSelector(state => state.weatherModule.favoriteCity)
 
-
     useEffect(() => {
         citiesService.getLongLat('Tel Aviv', 'Israel')
     }, [])
