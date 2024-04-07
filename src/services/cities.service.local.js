@@ -7,6 +7,7 @@ import Rain from '../assets/imgs/Rain.png'
 const STORAGE_KEY = 'weatherDB'
 const BASE_URL = 'weather'
 const VITE_WEATHER_API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
+const VITE_API_NINJAS_API_KEY = import.meta.env.VITE_API_NINJAS_API_KEY;
 
 export const citiesService = {
     query,
@@ -21,7 +22,8 @@ export const citiesService = {
     getWeatherImage,
     toggleIsFavorite,
     getFavoriteCities,
-    getCityByLatLong
+    getCityByLatLong,
+    getLongLat
 }
 
 async function update(city) {
@@ -138,4 +140,16 @@ async function getCityByLatLong(position) {
         console.log('error:', error)
         throw error
     }
+}
+
+async function getLongLat(city, country) {
+    const url = `https://api.api-ninjas.com/v1/geocoding?city=${city}&country=${country}`
+    const headers = {
+        'X-Api-Key': VITE_API_NINJAS_API_KEY
+    }
+
+    const { data } = await axios.get(url, { headers })
+    const LongLat = { longitude: data[0].longitude, latitude: data[0].latitude, city, country }
+    console.log('LongLat:', LongLat)
+    return LongLat
 }

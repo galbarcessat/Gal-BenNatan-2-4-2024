@@ -8,7 +8,8 @@ export const utilService = {
     debounce,
     getDayOfWeek,
     celsiusToFahrenheit,
-    getDegrees
+    getDegrees,
+    getBlessingByTime
 }
 
 function makeId(length = 6) {
@@ -64,4 +65,19 @@ function getDegrees(isCelsius, day) {
     } else {
         return Math.trunc(celsiusToFahrenheit(minDegInC)) + '°F' + ' - ' + Math.trunc(celsiusToFahrenheit(maxDegInC)) + '°F'
     }
+}
+
+export function getBlessingByTime() {
+	const date = new Date()
+	const currentHour = date.getHours()
+
+	if (currentHour >= 5 && currentHour < 12) {
+		return 'Good morning!'
+	} else if (currentHour >= 12 && currentHour < 18) {
+		return 'Good afternoon!'
+	} else if (currentHour >= 18 && currentHour < 21) {
+		return 'Good evening!'
+	} else {
+		return 'Good night!'
+	}
 }
