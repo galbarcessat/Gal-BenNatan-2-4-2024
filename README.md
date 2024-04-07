@@ -38,9 +38,9 @@ That's it! The App should be opened automatically, enjoy!
 
 ### Some mobile!
 Just a taste of the mobile experience.
+<img src="/src/assets/img/AbraHomePageMoblieImg" width="25%" style="float: left"/>
+<img src="/src/assets/img/AbraFavoritesMobileImg" width="25%" style="float: left"/>
 
-![Homepage mobile image](src/assets/imgs/AbraHomePageMoblieImg.png "Home-mobile-page")
-![Favorites mobile image](src/assets/imgs/AbraFavoritesMobileImg.png "Favorites-mobile-page")
 
 
 
