@@ -5,7 +5,6 @@ import CloudsAndSun from '../assets/imgs/CloudsAndSun.png'
 import Rain from '../assets/imgs/Rain.png'
 
 const STORAGE_KEY = 'weatherDB'
-const BASE_URL = 'weather'
 const VITE_WEATHER_API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
 const VITE_API_NINJAS_API_KEY = import.meta.env.VITE_API_NINJAS_API_KEY;
 
@@ -28,10 +27,8 @@ export const citiesService = {
 
 async function update(city) {
     return await storageService.put(STORAGE_KEY, city)
-    // let updatedBoard = await httpService.put(`${BASE_URL}/${boardId}`, board)
 }
 async function query() {
-    // return httpService.get(BASE_URL, null)
     return await storageService.query(STORAGE_KEY)
 }
 
@@ -48,12 +45,10 @@ async function getCityById(id) {
 }
 
 async function save(city) {
-    // return await httpService.post(BASE_URL, board)
     return await storageService.post(STORAGE_KEY, city)
 }
 
 async function remove(cityId) {
-    // return httpService.delete(`${BASE_URL}/${boardId}`, boardId)
     return await storageService.remove(STORAGE_KEY, cityId)
 }
 
@@ -125,7 +120,6 @@ async function getCityByLatLong(position) {
     const lat = position.coords.latitude
     try {
         const { data } = await axios.get(`https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${VITE_WEATHER_API_KEY}&q=${lat},${long}`)
-        // console.log('res:', res.data)
         const city = {
             Version: data.Version,
             Key: data.Key,

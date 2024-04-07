@@ -5,7 +5,6 @@ export function CityDetailsHeader({ fiveDaysForecaset, selectedCity, setSelected
 
     async function onToggleFavorite() {
         const savedCity = await citiesService.toggleIsFavorite(selectedCity)
-        console.log('savedCity:', savedCity)
         setSelectedCity(savedCity)
     }
 

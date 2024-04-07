@@ -10,12 +10,8 @@ import { utilService } from '../services/util.service';
 
 // IMPORTANT
 //try to fix all autocomplete bugs
-//clear code on all files
 //READ ME file
 //Upload to render.com
-
-// EXTRAS
-// Google maps in favorties page
 
 export function WeatherDetails() {
     const [searchBy, setSearchBy] = useState('')
@@ -24,10 +20,6 @@ export function WeatherDetails() {
     const [currConditions, setCurrConditions] = useState(null)
     const [fiveDaysForecaset, setFiveDaysForecaset] = useState(null)
     const savedFavoriteCity = useSelector(state => state.weatherModule.favoriteCity)
-
-    useEffect(() => {
-        citiesService.getLongLat('Tel Aviv', 'Israel')
-    }, [])
 
     useEffect(() => {
         debouncedGetCityOptions()

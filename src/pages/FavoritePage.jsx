@@ -31,7 +31,7 @@ export function FavoritePage() {
             <div className="favorite-page-container">
                 <h1 className="favorite-title">Favorites</h1>
                 <FavoriteList favoriteCities={favoriteCities} isCelsius={isCelsius} />
-            <GoogleMap favoriteCities={favoriteCities} isCelsius={isCelsius} />
+                <GoogleMap favoriteCities={favoriteCities} isCelsius={isCelsius} />
             </div>
         </>
     )

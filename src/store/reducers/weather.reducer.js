@@ -7,7 +7,6 @@ const initialState = {
     isCelsius: true,
     favoriteCity: null,
     currPage: 'home'
-
 }
 
 export function weatherReducer(state = initialState, action) {
