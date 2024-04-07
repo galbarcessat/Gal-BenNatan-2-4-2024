@@ -1,12 +1,14 @@
 # Abra home assignment. 
-
 [Live demo here](https://abragalbennatan.onrender.com "Abra weather app")
+
+![Homepage image](src/assets/imgs/AbraHomePageImg.png "Home-page")
+
 ## This project is built using React, Redux, SASS, MaterialUI, Axios, Local Storage, Google maps API, AccuWeather API and API Ninjas.
 
 ## Application Features
 - Search for every city in the world with autocomplete.
-- 5 days forecast
-- Updated weather conditions
+- 5 days weather forecast.
+- Updated weather conditions.
 - Toggle celsius/fahrenheit.
 - Dark/Light mode.
 - Save cities to favorites.
@@ -38,9 +40,11 @@ That's it! The App should be opened automatically, enjoy!
 
 ### Some mobile!
 Just a taste of the mobile experience.
-<img src="/src/assets/img/AbraHomePageMoblieImg" width="25%" style="float: left"/>
-<img src="/src/assets/img/AbraFavoritesMobileImg" width="25%" style="float: left"/>
 
+<div style="display: flex; flex-direction: row; justify-content: center;">
+    <img src="src/assets/imgs/AbraHomePageMoblieImg.png" alt="Homepage mobile image" title="Home-mobile-page" width="300">
+    <img src="src/assets/imgs/AbraFavoritesMobileImg.png" alt="Favorites mobile image" title="Favorites-mobile-page" width="300">
+</div>
 
 
 
