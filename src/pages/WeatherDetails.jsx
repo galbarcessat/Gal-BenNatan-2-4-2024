@@ -8,11 +8,6 @@ import { setFavoriteCity } from '../store/actions/weather.action';
 import { Loader } from '../cmps/Loader';
 import { utilService } from '../services/util.service';
 
-// IMPORTANT
-//try to fix all autocomplete bugs
-//READ ME file
-//Upload to render.com
-
 export function WeatherDetails() {
     const [searchBy, setSearchBy] = useState('')
     const [selectedCity, setSelectedCity] = useState(null)
