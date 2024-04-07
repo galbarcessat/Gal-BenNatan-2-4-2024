@@ -87,7 +87,7 @@ async function getFavoriteCities() {
 //API Calls functions
 async function getAutoComplete(text) {
     try {
-        const res = await axios.get(`http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${VITE_WEATHER_API_KEY}&q=${text}`)
+        const res = await axios.get(`https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${VITE_WEATHER_API_KEY}&q=${text}`)
         return res.data
     } catch (error) {
         console.log('error:', error)
@@ -97,7 +97,7 @@ async function getAutoComplete(text) {
 
 async function getCurrConditions(locationKey) {
     try {
-        const res = await axios.get(`http://dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${VITE_WEATHER_API_KEY}`)
+        const res = await axios.get(`https://dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${VITE_WEATHER_API_KEY}`)
         return res.data
     } catch (error) {
         console.log('error:', error)
@@ -107,7 +107,7 @@ async function getCurrConditions(locationKey) {
 
 async function get5DaysForecast(locationKey) {
     try {
-        const res = await axios.get(` http://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}?apikey=${VITE_WEATHER_API_KEY}&metric=true`)
+        const res = await axios.get(` https://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}?apikey=${VITE_WEATHER_API_KEY}&metric=true`)
         return res.data
     } catch (error) {
         console.log('error:', error)
