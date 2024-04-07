@@ -6,10 +6,12 @@ import { citiesService } from '../services/cities.service.local';
 import { CityDetails } from '../cmps/CityDetails';
 import { setFavoriteCity } from '../store/actions/weather.action';
 import { Loader } from '../cmps/Loader';
+import { utilService } from '../services/util.service';
 
 // IMPORTANT
 //try to fix all autocomplete bugs
-//Add debounce to handleChange
+//READ ME file
+//Upload to render.com
 
 // EXTRAS
 //Time greeting - good morning...
@@ -24,7 +26,7 @@ export function WeatherDetails() {
     const savedFavoriteCity = useSelector(state => state.weatherModule.favoriteCity)
 
     useEffect(() => {
-        getCityOptions()
+        debouncedGetCityOptions()
     }, [searchBy])
 
     useEffect(() => {
@@ -36,6 +38,8 @@ export function WeatherDetails() {
             setSelectedCity(savedFavoriteCity)
         }
     }, [savedFavoriteCity])
+
+    const debouncedGetCityOptions = utilService.debounce(getCityOptions, 300)
 
     async function getCityOptions() {
         try {
@@ -137,7 +141,6 @@ export function WeatherDetails() {
                 options={cityOptions}
                 sx={{ width: 300 }}
                 renderInput={(params) => <TextField {...params} label="City" />}
-
             />
 
             <CityDetails
