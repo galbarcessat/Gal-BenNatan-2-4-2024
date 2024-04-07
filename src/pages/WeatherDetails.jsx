@@ -16,6 +16,8 @@ export function WeatherDetails() {
     const [fiveDaysForecaset, setFiveDaysForecaset] = useState(null)
     const savedFavoriteCity = useSelector(state => state.weatherModule.favoriteCity)
 
+    // Maybe make a system that uses all 3 AccuWeather API Keys so you wont get blocked as fast
+
     useEffect(() => {
         debouncedGetCityOptions()
     }, [searchBy])
