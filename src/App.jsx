@@ -7,6 +7,7 @@ import { Header } from './cmps/Header'
 import { WeatherDetails } from './pages/WeatherDetails'
 import { FavoritePage } from './pages/FavoritePage'
 import { UserMsg } from './cmps/UserMsg'
+import { GoogleMap } from './cmps/GoogleMap'
 
 export function App() {
 
@@ -19,6 +20,7 @@ export function App() {
           <Route element={<WeatherDetails />} path="/" />
           <Route element={<WeatherDetails />} path="/:id" />
           <Route element={<FavoritePage />} path="/favorite" />
+          <Route element={<GoogleMap />} path="/map" />
         </Routes>
       </Router>
     </Provider>

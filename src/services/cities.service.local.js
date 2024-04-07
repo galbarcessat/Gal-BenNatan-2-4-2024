@@ -143,13 +143,18 @@ async function getCityByLatLong(position) {
 }
 
 async function getLongLat(city, country) {
-    const url = `https://api.api-ninjas.com/v1/geocoding?city=${city}&country=${country}`
-    const headers = {
-        'X-Api-Key': VITE_API_NINJAS_API_KEY
+    try {
+        const url = `https://api.api-ninjas.com/v1/geocoding?city=${city}&country=${country}`
+        const headers = {
+            'X-Api-Key': VITE_API_NINJAS_API_KEY
+        }
+
+        const { data } = await axios.get(url, { headers })
+        const LongLat = { lat: data[0].latitude, lng: data[0].longitude }
+        return LongLat
+    } catch (error) {
+        console.log('error:', error)
+        throw error
     }
 
-    const { data } = await axios.get(url, { headers })
-    const LongLat = { longitude: data[0].longitude, latitude: data[0].latitude, city, country }
-    console.log('LongLat:', LongLat)
-    return LongLat
 }
