@@ -111,15 +111,17 @@ export function WeatherDetails() {
     function handleChange(ev) {
         if (!ev) return
         const value = ev.target.value
+        console.log('value:', value)
         if (/^[a-zA-Z\s]*$/.test(value) || value === '') {
             setSearchBy(value)
         }
         else {
+            if(value === 0) return
             showErrorMsg('Only english is allowed')
         }
     }
 
-    if (!selectedCity) return <Loader />
+    // if (!selectedCity) return <Loader />
     return (
         <section className='weather-details-container'>
             <Autocomplete
