@@ -90,7 +90,6 @@ async function getAutoComplete(text) {
         const res = await axios.get(`https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${VITE_WEATHER_API_KEY}&q=${text}`)
         return res.data
     } catch (error) {
-        console.log('error:', error)
         throw error
     }
 }
@@ -100,7 +99,6 @@ async function getCurrConditions(locationKey) {
         const res = await axios.get(`https://dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=${VITE_WEATHER_API_KEY}`)
         return res.data
     } catch (error) {
-        console.log('error:', error)
         throw error
     }
 }
@@ -110,7 +108,6 @@ async function get5DaysForecast(locationKey) {
         const res = await axios.get(` https://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}?apikey=${VITE_WEATHER_API_KEY}&metric=true`)
         return res.data
     } catch (error) {
-        console.log('error:', error)
         throw error
     }
 }
@@ -131,7 +128,6 @@ async function getCityByLatLong(position) {
         }
         return city
     } catch (error) {
-        console.log('error:', error)
         throw error
     }
 }
@@ -147,7 +143,6 @@ async function getLongLat(city, country) {
         const LongLat = { lat: data[0].latitude, lng: data[0].longitude }
         return LongLat
     } catch (error) {
-        console.log('error:', error)
         throw error
     }
 

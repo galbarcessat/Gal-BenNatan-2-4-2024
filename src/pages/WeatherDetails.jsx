@@ -16,8 +16,6 @@ export function WeatherDetails() {
     const [fiveDaysForecaset, setFiveDaysForecaset] = useState(null)
     const savedFavoriteCity = useSelector(state => state.weatherModule.favoriteCity)
 
-    // Maybe make a system that uses all 3 AccuWeather API Keys so you wont get blocked as fast
-
     useEffect(() => {
         debouncedGetCityOptions()
     }, [searchBy])
@@ -38,11 +36,9 @@ export function WeatherDetails() {
         try {
             if (searchBy) {
                 const cities = await citiesService.getAutoComplete(searchBy)
-                console.log('cities:', cities)
                 setCityOptions(cities)
             }
         } catch (error) {
-            console.log('error:', error)
             showErrorMsg(`Error fetching data for city options`)
         }
     }
@@ -55,7 +51,7 @@ export function WeatherDetails() {
                     setSelectedCity(city)
                 })
             } else {
-                console.log('geolocation IS NOT available , default is Tel Aviv')
+                showErrorMsg('geolocation IS NOT available , default is Tel Aviv')
                 setSelectedCity({
                     Version: 1,
                     Key: "215854",
@@ -78,7 +74,7 @@ export function WeatherDetails() {
     async function getWeather() {
         await setDefaultCity()
         if (!selectedCity && !savedFavoriteCity) return
-        const city = savedFavoriteCity ? savedFavoriteCity : selectedCity
+        const city = savedFavoriteCity || selectedCity
         try {
             if (savedFavoriteCity) {
                 setCurrConditions(savedFavoriteCity.conditions)
@@ -90,7 +86,6 @@ export function WeatherDetails() {
             setFiveDaysForecaset(forecast)
             showSuccessMsg(`Weather for ${city.LocalizedName} has been fetched`)
         } catch (error) {
-            console.log('error:', error)
             showErrorMsg(`Error fetching weather for ${city.LocalizedName}`)
         }
     }
@@ -102,7 +97,7 @@ export function WeatherDetails() {
             return
         }
         const cityFromStorage = await citiesService.getCityByKey(selectedOption?.Key)
-        const city = cityFromStorage ? cityFromStorage : selectedOption
+        const city = cityFromStorage || selectedOption
         setFavoriteCity(null)
         setSelectedCity(city)
         setSearchBy(city.LocalizedName)
@@ -111,7 +106,6 @@ export function WeatherDetails() {
     function handleChange(ev) {
         if (!ev) return
         const value = ev.target.value
-        console.log('value:', value)
         if (/^[a-zA-Z\s]*$/.test(value) || value === '') {
             setSearchBy(value)
         }
