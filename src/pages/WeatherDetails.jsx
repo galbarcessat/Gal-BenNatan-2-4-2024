@@ -1,12 +1,26 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Autocomplete, TextField } from '@mui/material';
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service';
 import { citiesService } from '../services/cities.service.local';
 import { CityDetails } from '../cmps/CityDetails';
 import { setFavoriteCity } from '../store/actions/weather.action';
-import { Loader } from '../cmps/Loader';
 import { utilService } from '../services/util.service';
+
+// THINGS TO FIX 
+// -change to ES6 convention - FIXED 
+// -clear all console logs - FIXED 
+// -Use SASS variables for colors - FIXED.
+
+// -UseRef for debounce - TODO 
+// -fix errors from MUI Autocomplete - TODO
+// -dont use Redux for FavoriteCities instead use navigate and useParams with id - TODO , using redux saves api calls..
+
+// -Fix UseEffects look at how is getCityOptions activated - ?
+// -fix components architectural - ?
+// -Use Typescript ?
+// -סיפריות שלא בשימוש? לא ראיתי
+
 
 export function WeatherDetails() {
     const [searchBy, setSearchBy] = useState('')
@@ -16,18 +30,16 @@ export function WeatherDetails() {
     const [fiveDaysForecaset, setFiveDaysForecaset] = useState(null)
     const savedFavoriteCity = useSelector(state => state.weatherModule.favoriteCity)
 
-    useEffect(() => {
+    useEffect(()=>{
         debouncedGetCityOptions()
-    }, [searchBy])
+    },[searchBy])
 
     useEffect(() => {
         getWeather()
     }, [selectedCity])
 
     useEffect(() => {
-        if (savedFavoriteCity) {
-            setSelectedCity(savedFavoriteCity)
-        }
+        if (savedFavoriteCity) setSelectedCity(savedFavoriteCity)
     }, [savedFavoriteCity])
 
     const debouncedGetCityOptions = utilService.debounce(getCityOptions, 300)
@@ -90,7 +102,6 @@ export function WeatherDetails() {
         }
     }
 
-
     async function onSelectCity(ev, selectedOption) {
         if (!selectedOption) {
             setSearchBy('')
@@ -110,12 +121,11 @@ export function WeatherDetails() {
             setSearchBy(value)
         }
         else {
-            if(value === 0) return
+            if (value === 0) return
             showErrorMsg('Only english is allowed')
         }
     }
 
-    // if (!selectedCity) return <Loader />
     return (
         <section className='weather-details-container'>
             <Autocomplete
