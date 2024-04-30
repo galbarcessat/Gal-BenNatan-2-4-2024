@@ -22,7 +22,6 @@ Head to the repository on top and clone the project or download the files.
 ```
 git clone https://github.com/galbarcessat/Gal-BenNatan-2-4-2024
 ```
-Enter the frontend folder.
 
 ```
 npm i 
